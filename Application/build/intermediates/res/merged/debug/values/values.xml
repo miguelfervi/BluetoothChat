@@ -25,8 +25,8 @@
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="intro_message">
         
-        
-            
+
+
             This application allows two Android devices to carry out two-way text chat over
             Bluetooth. It demonstrates all the fundamental Bluetooth API capabilites, such as:
               (1) Scanning for other Bluetooth devices
@@ -34,8 +34,8 @@
               (3) Establishing RFCOMM channels/sockets
               (4) Connecting to a remote device
               (5) Transfering data over Bluetooth
-            
-        
+
+
         
     </string>
     <string name="none_found">No devices found</string>
