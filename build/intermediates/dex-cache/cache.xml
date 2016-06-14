@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="abe4899a56a419bd1ae4f7d2c26ccee6460670d8">
+        <dex dex="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_e749ab418b0917730f8a6d6bbf9df9edf45c3312\classes.dex" />
+    </item>
+
+</items>
