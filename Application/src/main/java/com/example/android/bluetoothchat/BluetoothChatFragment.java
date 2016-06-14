@@ -30,56 +30,43 @@ import android.widget.Toast;
 
 
 /**
- * This fragment controls Bluetooth to communicate with other devices.
+ * Fragment para controlar el Bluetooth para comunicarse con otros dispositivos
  */
 public class BluetoothChatFragment extends Fragment {
 
     private static final String TAG = "BluetoothChatFragment";
 
-    // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
-    // Layout Views
     private ListView mConversationView;
     private EditText mOutEditText;
     private Button mSendButton;
 
-    /**
-     * Name of the connected device
-     */
+    // Dispositivo conectado
     private String mConnectedDeviceName = null;
 
-    /**
-     * Array adapter for the conversation thread
-     */
+    // Array adapter para el thread de la conversacion
     private ArrayAdapter<String> mConversationArrayAdapter;
 
-    /**
-     * String buffer for outgoing messages
-     */
+    // Buffer para los mensajes salientes
     private StringBuffer mOutStringBuffer;
 
-    /**
-     * Local Bluetooth adapter
-     */
+    // Adaptador Bluetooh local
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    /**
-     * Member object for the chat services
-     */
+    // Objetos del servicio chat
     private BluetoothChatService mChatService = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        // Get local Bluetooth adapter
+        // Get adaptador Bluetooh local
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        // If the adapter is null, then Bluetooth is not supported
-        if (mBluetoothAdapter == null) {
+        if (mBluetoothAdapter == null) { // No se soporta el Bluetooth
             FragmentActivity activity = getActivity();
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             activity.finish();
@@ -90,12 +77,10 @@ public class BluetoothChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // If BT is not on, request that it be enabled.
-        // setupChat() will then be called during onActivityResult
-        if (!mBluetoothAdapter.isEnabled()) {
+
+        if (!mBluetoothAdapter.isEnabled()) {  // Si el Bluetooth no esta disonible
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-            // Otherwise, setup the chat session
         } else if (mChatService == null) {
             setupChat();
         }
@@ -113,13 +98,9 @@ public class BluetoothChatFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Performing this check in onResume() covers the case in which BT was
-        // not enabled during onStart(), so we were paused to enable it...
-        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
         if (mChatService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
             if (mChatService.getState() == BluetoothChatService.STATE_NONE) {
-                // Start the Bluetooth chat services
+                // Servicio de chat Bluetooth
                 mChatService.start();
             }
         }
@@ -138,24 +119,18 @@ public class BluetoothChatFragment extends Fragment {
         mSendButton = (Button) view.findViewById(R.id.button_send);
     }
 
-    /**
-     * Set up the UI and background operations for chat.
-     */
+    // UI y operaciones en  background
     private void setupChat() {
         Log.d(TAG, "setupChat()");
 
-        // Initialize the array adapter for the conversation thread
+        // array adapter para la conversacion
         mConversationArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.message);
-
         mConversationView.setAdapter(mConversationArrayAdapter);
-
-        // Initialize the compose field with a listener for the return key
         mOutEditText.setOnEditorActionListener(mWriteListener);
 
-        // Initialize the send button with a listener that for click events
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Send a message using content of the edit text widget
+                // Envio del mensaje del text widget
                 View view = getView();
                 if (null != view) {
                     TextView textView = (TextView) view.findViewById(R.id.edit_text_out);
@@ -165,16 +140,14 @@ public class BluetoothChatFragment extends Fragment {
             }
         });
 
-        // Initialize the BluetoothChatService to perform bluetooth connections
+
         mChatService = new BluetoothChatService(getActivity(), mHandler);
 
-        // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer("");
     }
 
-    /**
-     * Makes this device discoverable.
-     */
+
+    // Dispositivo visible
     private void ensureDiscoverable() {
         if (mBluetoothAdapter.getScanMode() !=
                 BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
@@ -185,36 +158,30 @@ public class BluetoothChatFragment extends Fragment {
     }
 
     /**
-     * Sends a message.
+     * Mandar un mensaje
      *
      * @param message A string of text to send.
      */
     private void sendMessage(String message) {
-        // Check that we're actually connected before trying anything
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Check that there's actually something to send
         if (message.length() > 0) {
-            // Get the message bytes and tell the BluetoothChatService to write
             byte[] send = message.getBytes();
             mChatService.write(send);
 
-            // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
             mOutEditText.setText(mOutStringBuffer);
         }
     }
 
-    /**
-     * The action listener for the EditText widget, to listen for the return key
-     */
+
+    // Action listener para el EditText widget
     private TextView.OnEditorActionListener mWriteListener
             = new TextView.OnEditorActionListener() {
         public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-            // If the action is a key-up event on the return key, send the message
             if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_UP) {
                 String message = view.getText().toString();
                 sendMessage(message);
@@ -224,7 +191,7 @@ public class BluetoothChatFragment extends Fragment {
     };
 
     /**
-     * Updates the status on the action bar.
+     * Actualiza el estado de la action bar
      *
      * @param resId a string resource ID
      */
@@ -241,7 +208,7 @@ public class BluetoothChatFragment extends Fragment {
     }
 
     /**
-     * Updates the status on the action bar.
+     * Actualiza el estado de la action bar
      *
      * @param subTitle status
      */
@@ -257,9 +224,8 @@ public class BluetoothChatFragment extends Fragment {
         actionBar.setSubtitle(subTitle);
     }
 
-    /**
-     * The Handler that gets information back from the BluetoothChatService
-     */
+
+    //Handler que aporta información a BluetoothChatService
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -282,18 +248,15 @@ public class BluetoothChatFragment extends Fragment {
                     break;
                 case Constants.MESSAGE_WRITE:
                     byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
                     mConversationArrayAdapter.add("Me:  " + writeMessage);
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
-                    // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
                     if (null != activity) {
                         Toast.makeText(activity, "Connected to "
@@ -313,24 +276,19 @@ public class BluetoothChatFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CONNECT_DEVICE_SECURE:
-                // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
                     connectDevice(data, true);
                 }
                 break;
             case REQUEST_CONNECT_DEVICE_INSECURE:
-                // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
                     connectDevice(data, false);
                 }
                 break;
             case REQUEST_ENABLE_BT:
-                // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
-                    // Bluetooth is now enabled, so set up a chat session
                     setupChat();
                 } else {
-                    // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "BT not enabled");
                     Toast.makeText(getActivity(), R.string.bt_not_enabled_leaving,
                             Toast.LENGTH_SHORT).show();
@@ -340,18 +298,15 @@ public class BluetoothChatFragment extends Fragment {
     }
 
     /**
-     * Establish connection with other divice
+     * Establecemos conexión con otro dispositivo
      *
      * @param data   An {@link Intent} with {@link DeviceListActivity#EXTRA_DEVICE_ADDRESS} extra.
      * @param secure Socket Security type - Secure (true) , Insecure (false)
      */
     private void connectDevice(Intent data, boolean secure) {
-        // Get the device MAC address
         String address = data.getExtras()
                 .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-        // Get the BluetoothDevice object
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-        // Attempt to connect to the device
         mChatService.connect(device, secure);
     }
 
@@ -364,19 +319,16 @@ public class BluetoothChatFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.secure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
                 Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
                 return true;
             }
             case R.id.insecure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
                 Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
                 return true;
             }
             case R.id.discoverable: {
-                // Ensure this device is discoverable by others
                 ensureDiscoverable();
                 return true;
             }
