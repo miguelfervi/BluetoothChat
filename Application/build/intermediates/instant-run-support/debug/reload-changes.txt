@@ -1,0 +1,11 @@
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$style$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$id$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$styleable$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$layout$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$dimen$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$menu$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\android\support\v7\cardview\R$color$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$drawable$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$color$override.class
+CHANGED,C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\bluetoothchat\R$string$override.class

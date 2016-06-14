@@ -4,7 +4,7 @@
     api-level="22"
     density="xhdpi"
     format="7"
-    timestamp="18972790912535"
+    timestamp="99389851370906"
     token="-4299680830146799920" >
 
     <task
@@ -20,11 +20,22 @@
         name="verifier"
         duration="0" />
 
-    <build timestamp="18838355657930" >
+    <build timestamp="98955712776229" >
         <artifact
-            location="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\outputs\apk\Application-debug.apk"
-            type="MAIN" />
+            location="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\res\resources-debug.ap_"
+            type="RESOURCES" />
     </build>
-    <build timestamp="18972790912535" />
+    <build timestamp="99205400427718" >
+        <artifact
+            location="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\res\resources-debug.ap_"
+            type="RESOURCES" />
+        <artifact
+            location="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\Miguel\Desktop\BluetoothChat\Application\build\intermediates\transforms\dex\debug\folders\1000\5\slice_2\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="99389851370906" />
 
 </instant-run>
